@@ -12,7 +12,7 @@ namespace ServiceLocator.Player
 
         private void Awake()
         {
-            rangeTriggerCollider =  GetComponent<CircleCollider2D>();
+            rangeTriggerCollider = GetComponent<CircleCollider2D>();
             monkeyAnimator = GetComponent<Animator>();
         }
 
@@ -20,11 +20,25 @@ namespace ServiceLocator.Player
 
         public void SetTriggerRadius(float radiusToSet)
         {
-            if(rangeTriggerCollider != null)
+            if (rangeTriggerCollider != null)
                 rangeTriggerCollider.radius = radiusToSet;
 
             RangeSpriteRenderer.transform.localScale = new Vector3(radiusToSet, radiusToSet, 1);
             MakeRangeVisible(false);
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.GetComponent<BloonView>() != null)
+            {
+                controller.BloonEnteredRange(collision.GetComponent<BloonView>().Controller);
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.GetComponent<BloonView>() != null)
+                controller.BloonExitedRange(collision.GetComponent<BloonView>().Controller);
         }
 
         public void PlayAnimation(MonkeyAnimation animationToPlay) => monkeyAnimator.Play(animationToPlay.ToString(), 0);
