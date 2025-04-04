@@ -16,6 +16,6 @@ namespace ServiceLocator.Events
         {
             OnMapSelected = new GameEventController<int>();
         }
-        
+
     }
 }
