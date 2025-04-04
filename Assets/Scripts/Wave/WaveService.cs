@@ -12,8 +12,6 @@ namespace ServiceLocator.Wave
 {
     public class WaveService
     {
-        private EventService eventService;
-
         private WaveScriptableObject waveScriptableObject;
         private BloonPool bloonPool;
 

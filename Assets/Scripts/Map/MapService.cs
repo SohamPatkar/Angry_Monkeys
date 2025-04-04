@@ -2,14 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using ServiceLocator.Player;
-using ServiceLocator.Events;
 using ServiceLocator.Main;
 
 namespace ServiceLocator.Map
 {
     public class MapService
     {
-        private EventService eventService;
         private MapScriptableObject mapScriptableObject;
 
         private Grid currentGrid;

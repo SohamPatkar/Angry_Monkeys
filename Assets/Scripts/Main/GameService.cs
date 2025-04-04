@@ -5,6 +5,7 @@ using ServiceLocator.Sound;
 using UnityEngine;
 using ServiceLocator.UI;
 using ServiceLocator.Wave;
+using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Main
 {
@@ -14,7 +15,8 @@ namespace ServiceLocator.Main
         public MapService mapService { get; private set; }
         public SoundService soundService { get; private set; }
         public WaveService waveService { get; private set; }
-        public EventService eventService { get; private set; }
+        [SerializeField] private EventService eventServiceInstance;
+        public EventService eventService => eventServiceInstance;
         [SerializeField] private UIService uIServiceInstance;
         public UIService uIService => uIServiceInstance;
 
@@ -35,7 +37,6 @@ namespace ServiceLocator.Main
         // Start is called before the first frame update
         void Start()
         {
-            eventService = new EventService();
             playerService = new PlayerService(playerScriptableObject);
             mapService = new MapService(mapScriptableObject);
             soundService = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
