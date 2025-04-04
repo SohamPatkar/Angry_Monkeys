@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ServiceLocator.Events
 {
-    public class EventService : MonoBehaviour
+    public class EventService
     {
         public GameEventController<int> OnMapSelected { get; private set; }
 
@@ -16,6 +16,6 @@ namespace ServiceLocator.Events
         {
             OnMapSelected = new GameEventController<int>();
         }
-        
+
     }
 }
