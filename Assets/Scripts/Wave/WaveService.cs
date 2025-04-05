@@ -27,7 +27,7 @@ namespace ServiceLocator.Wave
         public WaveService(WaveScriptableObject waveScriptableObject)
         {
             this.waveScriptableObject = waveScriptableObject;
-            InitializeBloons();
+
         }
 
         public void Init(EventService eventService, UIService uiService, SoundService soundService, MapService mapService)
@@ -37,6 +37,7 @@ namespace ServiceLocator.Wave
             this.soundService = soundService;
             this.mapService = mapService;
 
+            InitializeBloons();
             SubscribeToEvents();
         }
 
