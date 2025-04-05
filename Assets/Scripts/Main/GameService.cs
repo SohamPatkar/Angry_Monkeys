@@ -41,6 +41,12 @@ namespace ServiceLocator.Main
             mapService = new MapService(mapScriptableObject);
             soundService = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
             waveService = new WaveService(waveScriptableObject);
+            Init();
+        }
+
+        private void Init()
+        {
+            playerService.Init(uIService, mapService);
         }
 
         // Update is called once per frame

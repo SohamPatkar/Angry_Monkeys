@@ -3,7 +3,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using ServiceLocator.Events;
 using ServiceLocator.Main;
 
 namespace ServiceLocator.UI

@@ -11,7 +11,8 @@ namespace ServiceLocator.Player
     public class PlayerService
     {
         private PlayerScriptableObject playerScriptableObject;
-
+        private UIService uIService;
+        private MapService mapService;
         private ProjectilePool projectilePool;
         private List<MonkeyController> activeMonkeys;
         private MonkeyView selectedMonkeyView;
@@ -22,6 +23,13 @@ namespace ServiceLocator.Player
         {
             this.playerScriptableObject = playerScriptableObject;
             projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
+        }
+
+        public void Init(UIService uIService, MapService mapService)
+        {
+            this.uIService = uIService;
+            this.mapService = mapService;
+
             InitializeVariables();
         }
 
@@ -29,8 +37,8 @@ namespace ServiceLocator.Player
         {
             health = playerScriptableObject.Health;
             Money = playerScriptableObject.Money;
-            GameService.Instance.uIService.UpdateHealthUI(health);
-            GameService.Instance.uIService.UpdateMoneyUI(Money);
+            uIService.UpdateHealthUI(health);
+            uIService.UpdateMoneyUI(Money);
             activeMonkeys = new List<MonkeyController>();
         }
 
@@ -86,7 +94,7 @@ namespace ServiceLocator.Player
             if (monkeyCost > Money)
                 return;
 
-            GameService.Instance.mapService.ValidateSpawnPosition(dropPosition);
+            mapService.ValidateSpawnPosition(dropPosition);
         }
 
         public void TrySpawningMonkey(MonkeyType monkeyType, int monkeyCost, Vector3 dropPosition)
@@ -94,7 +102,7 @@ namespace ServiceLocator.Player
             if (monkeyCost > Money)
                 return;
 
-            if (GameService.Instance.mapService.TryGetMonkeySpawnPosition(dropPosition, out Vector3 spawnPosition))
+            if (mapService.TryGetMonkeySpawnPosition(dropPosition, out Vector3 spawnPosition))
             {
                 SpawnMonkey(monkeyType, spawnPosition);
                 GameService.Instance.soundService.PlaySoundEffects(SoundType.SpawnMonkey);
