@@ -4,11 +4,16 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using ServiceLocator.Main;
+using ServiceLocator.Events;
+using ServiceLocator.Wave;
 
 namespace ServiceLocator.UI
 {
     public class UIService : MonoBehaviour
     {
+        private EventService eventService;
+        private WaveService waveService;
+
         [Header("Gameplay Panel")]
         [SerializeField] private GameObject gameplayPanel;
         [SerializeField] private TextMeshProUGUI healthText;
@@ -47,11 +52,17 @@ namespace ServiceLocator.UI
             nextWaveButton.onClick.AddListener(OnNextWaveButton);
             quitButton.onClick.AddListener(OnQuitButtonClicked);
             playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
+        }
+
+        public void Init(EventService eventService, WaveService waveService)
+        {
+            this.eventService = eventService;
+            this.waveService = waveService;
 
             SubscribeToEvents();
         }
 
-        public void SubscribeToEvents() => GameService.Instance.eventService.OnMapSelected.AddListener(OnMapSelected);
+        public void SubscribeToEvents() => eventService.OnMapSelected.AddListener(OnMapSelected);
 
         public void OnMapSelected(int mapID)
         {
@@ -64,7 +75,7 @@ namespace ServiceLocator.UI
 
         private void OnNextWaveButton()
         {
-            GameService.Instance.waveService.StarNextWave();
+            waveService.StarNextWave();
             SetNextWaveButton(false);
         }
 
