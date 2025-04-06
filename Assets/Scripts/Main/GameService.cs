@@ -5,18 +5,16 @@ using ServiceLocator.Sound;
 using UnityEngine;
 using ServiceLocator.UI;
 using ServiceLocator.Wave;
-using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Main
 {
-    public class GameService : GenericMonoSingleton<GameService>
+    public class GameService : MonoBehaviour
     {
         public PlayerService playerService { get; private set; }
         public MapService mapService { get; private set; }
         public SoundService soundService { get; private set; }
         public WaveService waveService { get; private set; }
-        [SerializeField] private EventService eventServiceInstance;
-        public EventService eventService => eventServiceInstance;
+        public EventService eventService { get; private set; }
         [SerializeField] private UIService uIServiceInstance;
         public UIService uIService => uIServiceInstance;
 
@@ -37,10 +35,20 @@ namespace ServiceLocator.Main
         // Start is called before the first frame update
         void Start()
         {
+            eventService = new EventService();
             playerService = new PlayerService(playerScriptableObject);
             mapService = new MapService(mapScriptableObject);
             soundService = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
             waveService = new WaveService(waveScriptableObject);
+            Init();
+        }
+
+        private void Init()
+        {
+            playerService.Init(uIService, mapService, soundService);
+            mapService.Init(eventService);
+            waveService.Init(eventService, uIService, soundService, mapService, playerService);
+            uIService.Init(eventService, waveService, playerService);
         }
 
         // Update is called once per frame
