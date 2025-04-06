@@ -3,6 +3,7 @@ using UnityEngine;
 using ServiceLocator.Wave.Bloon;
 using ServiceLocator.Player.Projectile;
 using ServiceLocator.Main;
+using ServiceLocator.Sound;
 
 namespace ServiceLocator.Player
 {
@@ -12,11 +13,13 @@ namespace ServiceLocator.Player
         private MonkeyScriptableObject monkeyScriptableObject;
         private ProjectilePool projectilePool;
         private List<BloonController> bloonControllers;
+        private SoundService soundService;
 
         private float attackTimer;
 
-        public MonkeyController(MonkeyScriptableObject monkeyScriptableObject, ProjectilePool projectilePool)
+        public MonkeyController(MonkeyScriptableObject monkeyScriptableObject, ProjectilePool projectilePool, SoundService soundService)
         {
+            this.soundService = soundService;
             this.monkeyScriptableObject = monkeyScriptableObject;
             this.projectilePool = projectilePool;
             bloonControllers = new List<BloonController>();
@@ -29,7 +32,6 @@ namespace ServiceLocator.Player
             monkeyView = Object.Instantiate(monkeyScriptableObject.Prefab);
             monkeyView.SetController(this);
             monkeyView.SetTriggerRadius(monkeyScriptableObject.Range);
-
         }
 
         public void UpdateMonkeyController()
@@ -72,7 +74,7 @@ namespace ServiceLocator.Player
                 ProjectileController projectile = projectilePool.GetProjectile(monkeyScriptableObject.projectileType);
                 projectile.SetPosition(monkeyView.transform.position);
                 projectile.SetTarget(targetBloon);
-                GameService.Instance.soundService.PlaySoundEffects(Sound.SoundType.MonkeyShoot);
+                soundService.PlaySoundEffects(Sound.SoundType.MonkeyShoot);
                 ResetAttackTimer();
             }
         }

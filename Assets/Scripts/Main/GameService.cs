@@ -47,8 +47,8 @@ namespace ServiceLocator.Main
         {
             playerService.Init(uIService, mapService, soundService);
             mapService.Init(eventService);
-            waveService.Init(eventService, uIService, soundService, mapService);
-            uIService.Init(eventService, waveService);
+            waveService.Init(eventService, uIService, soundService, mapService, playerService);
+            uIService.Init(eventService, waveService, playerService);
         }
 
         // Update is called once per frame
