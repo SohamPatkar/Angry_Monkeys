@@ -8,7 +8,7 @@ using ServiceLocator.Wave;
 
 namespace ServiceLocator.Main
 {
-    public class GameService : GenericMonoSingleton<GameService>
+    public class GameService : MonoBehaviour
     {
         public PlayerService playerService { get; private set; }
         public MapService mapService { get; private set; }
